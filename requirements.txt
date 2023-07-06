@@ -1,0 +1,4 @@
+Openai
+nltk
+os
+streamlit as st
