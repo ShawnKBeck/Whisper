@@ -1,4 +1,4 @@
 openai
 nltk
 os
-streamlit as st
+streamlit
