@@ -4,8 +4,7 @@ import nltk # Import Natural Language Toolkit
 import os
 
 
-my_secret = os.environ['OPENAI_API_KEY']
-openai.api_key = my_secret # Authenticating with OpenAI API key
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def transcribe_audio(file_path): # Defining a function to transcribe audio using OpenAI API
   with open(file_path, "rb") as file: # Opening the audio file in binary mode for transcription
