@@ -10,6 +10,19 @@ def transcribe_audio(file_path): # Defining a function to transcribe audio using
     transcription = openai.Audio.transcribe("whisper-1", file) # Using OpenAI Audio API to transcribe audio file
     return transcription["text"] # Returning the transcribed text
 
+def summarize_text(text):  # Function to summarize text using OpenAI's GPT-3.5-turbo
+    messages = [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": f"Please summarize the following text and provide bullet points: {text}"},
+    ]
+
+    response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
+      messages=messages
+    )
+
+    return response['choices'][0]['message']['content']
+
 # Streamlit code
 
 st.title('Audio Transcription App')
@@ -25,6 +38,9 @@ if uploaded_file is not None:
   
   transcription_text = transcribe_audio(temp_file_path) # Transcribing the audio file
 
+  # Summarize the transcribed text and break it down into bullet points
+  summary = summarize_text(transcription_text)
+
   nltk.download('punkt') # Downloading pre-trained sentence tokenizer
 
   sentences = nltk.tokenize.sent_tokenize(transcription_text) # Tokenizing transcribed text into sentences
@@ -34,3 +50,4 @@ if uploaded_file is not None:
         f.write(sentence + '\\n')
 
   st.write("Transcription:", transcription_text) # Printing transcription
+  st.write("Summary:", summary)  # Printing the summary
