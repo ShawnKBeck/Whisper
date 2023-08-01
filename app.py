@@ -1,3 +1,4 @@
+from moviepy.editor import *
 import streamlit as st # Import Streamlit library
 import openai # Import OpenAI API library
 import nltk # Import Natural Language Toolkit
@@ -51,3 +52,18 @@ if uploaded_file is not None:
 
   st.write("Transcription:", transcription_text) # Printing transcription
   st.write("Summary:", summary)  # Printing the summary
+
+def convert_mp4_to_mp3(mp4_file):
+    mp3_path = mp4_file.replace('.mp4', '.mp3')
+    video = VideoFileClip(mp4_file)
+    audio = video.audio
+    audio.write_audiofile(mp3_path)
+    return mp3_path
+
+uploaded_file = st.file_uploader("Upload an MP4 file", type="mp4")
+if uploaded_file is not None:
+    mp4_file_path = "uploaded.mp4"
+    with open(mp4_file_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
+    mp3_file_path = convert_mp4_to_mp3(mp4_file_path)
+    st.write(f"MP3 file created: {mp3_file_path}")
