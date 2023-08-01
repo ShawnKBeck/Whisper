@@ -1,5 +1,0 @@
-openai
-nltk
-streamlit
-moviepy
-pydub
